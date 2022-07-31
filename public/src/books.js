@@ -25,7 +25,19 @@ function partitionBooksByBorrowedStatus(books) {
     }
   
 function getBorrowersForBook(book, accounts) {
+  results = []
+// Loop through each account
+accounts.forEach(account => {
+  let currentAccountId = account.id
+  let borrowedBookByAccount = book.borrows.find(borrowedBook => borrowedBook.id === currentAccountId && borrowedBook.returned === true );
+
+  if(borrowedBookByAccount) {
+    results.push({returned: true, ...account});
+  }
+})
   
+
+  return results.slice(0, 10); // get 1st 10 items
 }
 
 module.exports = {
