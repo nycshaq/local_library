@@ -20,9 +20,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^4.2.0",
-    "colors": "1.4.0",  
+    "chai": "^4.3.6",
+    "colors": "1.4.0",
     "live-server": "1.2.1",
-    "mocha": "^8.1.1"
+    "mocha": "^8.4.0"
   }
 }
