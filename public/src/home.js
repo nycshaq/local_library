@@ -1,3 +1,7 @@
+const {
+  sortByCount
+} = require("./helpers/util.js");
+
 function getTotalBooksCount(books) {
   return books.length;
 }
@@ -34,19 +38,21 @@ function getMostCommonGenres(books) {
       name: keyName,
       count: booksByGenreObj[keyName],
     });
-    results.sort((a, b) => b.count - a.count);
+    
+    sortByCount(results)
   }
   return results.slice(0, 5);
 }
 
 function getMostPopularBooks(books) {
-  return books.map((book) => { return {name: book.title, count: book.borrows.length} }).sort((a, b) => b.count - a.count).slice(0, 5);
+ const popularBooks = books.map((book) => { return {name: book.title, count: book.borrows.length} })
+ return sortByCount(popularBooks).slice(0, 5);
 }
 
 function getMostPopularAuthors(books, authors) {
   const results = authors.map((author) => {
-    const fullName = `${author.name.first} ${author.name.last}`; // Get full name of Author
-    const booksByAuthor = books.filter((book) => book.authorId === author.id); // Filter books by author
+    const fullName = `${author.name.first} ${author.name.last}`; 
+    const booksByAuthor = books.filter((book) => book.authorId === author.id); 
     const totalBorrows = booksByAuthor.reduce((currentTotal, book) => currentTotal + book.borrows.length, 0); // Count all of author borrowed books using reduce
     return  {
       name: fullName,
@@ -55,7 +61,7 @@ function getMostPopularAuthors(books, authors) {
   });
   
 
-  return results.sort((authorA, authorB) => authorB.count - authorA.count).splice(0,5); // Reverse sort and get top 5 most popular authors
+  return sortByCount(results).splice(0,5); 
 }
 
 module.exports = {
