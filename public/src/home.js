@@ -43,7 +43,20 @@ function getMostPopularBooks(books) {
   return books.map((book) => { return {name: book.title, count: book.borrows.length} }).sort((a, b) => b.count - a.count).slice(0, 5);
 }
 
-function getMostPopularAuthors(books, authors) {}
+function getMostPopularAuthors(books, authors) {
+  const results = authors.map((author) => {
+    const fullName = `${author.name.first} ${author.name.last}`; // Get full name of Author
+    const booksByAuthor = books.filter((book) => book.authorId === author.id); // Filter books by author
+    const totalBorrows = booksByAuthor.reduce((currentTotal, book) => currentTotal + book.borrows.length, 0); // Count all of author borrowed books using reduce
+    return  {
+      name: fullName,
+      count: totalBorrows,
+    };
+  });
+  
+
+  return results.sort((authorA, authorB) => authorB.count - authorA.count).splice(0,5); // Reverse sort and get top 5 most popular authors
+}
 
 module.exports = {
   getTotalBooksCount,
